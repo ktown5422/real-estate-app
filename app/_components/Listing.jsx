@@ -18,6 +18,8 @@ function Listing({ listing, handleSearchClick, searchedAddress,
         <div>
             <div className='p-3 flex gap-6'>
                 <GoogleAddressSearch
+                    value={address}
+                    onChange={setAddress}
                     selectedAddress={(v) => {
                         searchedAddress(v);
                         setAddress(v)
@@ -46,7 +48,7 @@ function Listing({ listing, handleSearchClick, searchedAddress,
                 {listing?.length > 0 ? listing.map((item, index) => item?.listingImages[0]?.url && (
                     <Link href={'/view-listing/' + item.id}>
                         <div className='p-3 hover:border hover:border-primary rounded-lg cursor-pointer'>
-                            <Image src={item[0]?.listingImages[0]?.url}
+                            <Image src={item?.listingImages[0]?.url}
                                 width={800}
                                 height={150}
                                 className='rounded-lg object-cover h-[170px]'

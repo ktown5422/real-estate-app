@@ -14,17 +14,18 @@ function GoogleAddressSearch({ selectedAddress, setCoordinates }) {
           isClearable: true,
           className: 'w-full',
           onChange: (place) => {
-            console.log(place);
-            selectedAddress(place);
-            geocodeByAddress(place.label)
-              .then(result => getLatLng(result[0]))
-              .then(({ lat, lng }) => {
-
-                setCoordinates({ lat, lng })
-              })
+            if (place) {
+              selectedAddress(place);
+              geocodeByAddress(place.label)
+                .then(result => getLatLng(result[0]))
+                .then(({ lat, lng }) => {
+                  setCoordinates({ lat, lng })
+                })
+            } else {
+              selectedAddress(null);
+            }
           }
         }}
-
       />
     </div>
   )

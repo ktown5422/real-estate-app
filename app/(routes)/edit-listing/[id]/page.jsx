@@ -41,7 +41,6 @@ function EditListing({ params }) {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
 
-        // console.log(params.split('/')[2]);
         user && verifyUserRecord();
     }, [user]);
 
@@ -52,7 +51,6 @@ function EditListing({ params }) {
             .eq('createdBy', user?.primaryEmailAddress.emailAddress)
             .eq('id', params.id);
         if (data) {
-            console.log(data)
             setListing(data[0]);
         }
         if (data?.length <= 0) {
@@ -74,7 +72,6 @@ function EditListing({ params }) {
             .select();
 
         if (data) {
-            console.log(data);
             toast('Listing updated and Published');
             setLoading(false)
             publishBtnHandler();
@@ -143,11 +140,10 @@ function EditListing({ params }) {
                 initialValues={{
                     type: '',
                     propertyType: '',
-                    profileImage: user?.imageUrl,
+                    // profileImage: user?.imageUrl,
                     // fullName: user?.fullName
                 }}
                 onSubmit={(values) => {
-                    console.log(values);
                     onSubmitHandler(values);
                 }}
             >
@@ -277,7 +273,7 @@ function EditListing({ params }) {
                                         {loading ? <Loader className='animate-spin' /> : 'Save'}
                                     </Button>
 
-                                    <AlertDialog>
+                                    {/* <AlertDialog>
                                         <AlertDialogTrigger asChild>
                                             <Button type="button" disabled={loading} className="">
                                                 {loading ? <Loader className='animate-spin' /> : 'Publish'}
@@ -297,7 +293,7 @@ function EditListing({ params }) {
                                                 </AlertDialogAction>
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
-                                    </AlertDialog>
+                                    </AlertDialog> */}
 
 
                                 </div>

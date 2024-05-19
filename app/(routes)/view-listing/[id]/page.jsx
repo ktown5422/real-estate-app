@@ -20,7 +20,6 @@ function ViewListing({ params }) {
                     .eq('active', true);
 
                 if (data) {
-                    console.log('///---', data);
                     setListingDetail(data);
                 }
                 if (error) {

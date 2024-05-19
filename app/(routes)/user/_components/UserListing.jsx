@@ -29,7 +29,6 @@ function UserListing() {
             .from('listing')
             .select(`*,listingImages(url,listing_id)`)
             .eq('createdBy', user?.primaryEmailAddress.emailAddress);
-        console.log('+++++++++', data);
         setListing(data);
     }
 

@@ -29,7 +29,6 @@ function ListingMapView({ type }) {
             .order('id', { ascending: false })
 
         if (data) {
-            console.log('query----=-=-', data)
             setListing(data);
         }
         if (error) {
@@ -39,12 +38,11 @@ function ListingMapView({ type }) {
 
     useEffect(() => {
         getLatestListing();
-    }, [type])
+    }, [])
 
 
 
     const handleSearchClick = async () => {
-        console.log(searchedAddress);
         const searchTerm = searchedAddress?.value?.structured_formatting?.main_text
 
         let query = supabase
@@ -67,18 +65,15 @@ function ListingMapView({ type }) {
 
         const { data, error } = await query;
         if (data) {
-            console.log('q333333333', data)
             setListing(data);
         }
 
     }
 
-    const mergedListing = listing.length === 0 ? dummyData : listing;
-
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
             <div>
-                <Listing listing={mergedListing}
+                <Listing listing={listing}
                     handleSearchClick={handleSearchClick}
                     searchedAddress={(v) => setSearchedAddress(v)}
                     setBathCount={setBathCount}
