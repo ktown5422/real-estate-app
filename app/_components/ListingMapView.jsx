@@ -1,14 +1,12 @@
 "use client"
-import React, { useEffect, useState } from 'react'
-import Listing from './Listing'
-import { supabase } from '@/utils/supabase/client'
+import React, { useEffect, useState } from 'react';
+import Listing from './Listing';
+import { supabase } from '@/utils/supabase/client';
 import { toast } from 'sonner';
 import GoogleMapSection from './GoogleMapSection';
 import dummyData from '@/utils/dummyData';
 
-
 function ListingMapView({ type }) {
-
     const [listing, setListing] = useState([]);
     const [searchedAddress, setSearchedAddress] = useState();
     const [bedCount, setBedCount] = useState(0);
@@ -26,24 +24,22 @@ function ListingMapView({ type }) {
         )`)
             .eq('active', true)
             .eq('type', type)
-            .order('id', { ascending: false })
+            .order('id', { ascending: false });
 
         if (data) {
             setListing(data);
         }
         if (error) {
-            toast('Server Side Error')
+            toast('Server Side Error');
         }
     }
 
     useEffect(() => {
         getLatestListing();
-    }, [])
-
-
+    }, []);
 
     const handleSearchClick = async () => {
-        const searchTerm = searchedAddress?.value?.structured_formatting?.main_text
+        const searchTerm = searchedAddress?.value?.structured_formatting?.main_text;
 
         let query = supabase
             .from('listing')
@@ -60,20 +56,21 @@ function ListingMapView({ type }) {
             .order('id', { ascending: false });
 
         if (homeType) {
-            query = query.eq('propertyType', homeType)
+            query = query.eq('propertyType', homeType);
         }
 
         const { data, error } = await query;
         if (data) {
             setListing(data);
         }
-
     }
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-            <div>
-                <Listing listing={listing}
+        <div className='flex flex-col md:flex-row gap-8'>
+            {/* Listing section */}
+            <div className='flex-1'>
+                <Listing
+                    listing={listing}
                     handleSearchClick={handleSearchClick}
                     searchedAddress={(v) => setSearchedAddress(v)}
                     setBathCount={setBathCount}
@@ -83,15 +80,18 @@ function ListingMapView({ type }) {
                     setCoordinates={setCoordinates}
                 />
             </div>
-            <div className='fixed right-10 h-full 
-        md:w-[350px] lg:w-[450px] xl:w-[650px]'>
-                <GoogleMapSection
-                    listing={listing}
-                    coordinates={coordinates}
-                />
+
+            {/* Google Map Section */}
+            <div className='flex-1 relative md:static h-[300px] md:h-auto'>
+                <div className='w-full h-full md:w-[350px] lg:w-[450px] xl:w-[650px]'>
+                    <GoogleMapSection
+                        listing={listing}
+                        coordinates={coordinates}
+                    />
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default ListingMapView
+export default ListingMapView;
