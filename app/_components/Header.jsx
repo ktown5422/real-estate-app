@@ -23,8 +23,8 @@ function Header() {
   return (
     <div className='p-6 px-4 md:px-10 flex justify-between shadow-sm fixed top-0 w-full z-10 bg-white'>
       <div className='flex gap-4 md:gap-12 items-center'>
-        <Link href={'/'}>
-          <Image src={'/logo.svg'} width={100} height={0} alt='logo' className='w-auto h-auto' />
+        <Link className='font-bold text-xl' href={'/'}>
+          Real Estate App
         </Link>
 
         {/* Desktop Navigation */}
