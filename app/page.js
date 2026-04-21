@@ -3,8 +3,8 @@ import ListingMapView from "./_components/ListingMapView";
 
 export default function Home() {
   return (
-    <div className=" p-10">
+    <main className="app-shell py-6">
       <ListingMapView type='Sell' />
-    </div>
+    </main>
   );
 }

@@ -3,9 +3,9 @@ import React from 'react'
 
 function ForRent() {
   return (
-    <div className=" p-10">
-    <ListingMapView type='Rent' />
- </div>
+    <main className="app-shell py-6">
+      <ListingMapView type='Rent' />
+    </main>
   )
 }
 

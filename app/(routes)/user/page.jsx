@@ -6,8 +6,8 @@ import UserListing from './_components/UserListing'
 
 function User() {
   return (
-    <div className='my-6 md:px-10 lg:px-32 w-full'>
-        <h2 className='font-bold text-2xl py-3'>Profile</h2>
+    <main className='app-shell w-full py-8'>
+        <h1 className='mb-5 text-4xl font-bold tracking-tight text-slate-950'>Profile</h1>
         <UserProfile>
             <UserButton.UserProfilePage
             label='My Listing'
@@ -17,7 +17,7 @@ function User() {
                 <UserListing/>
             </UserButton.UserProfilePage>
         </UserProfile>
-    </div>
+    </main>
   )
 }
 

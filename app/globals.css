@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 42 25% 97%;
+    --foreground: 218 30% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 218 30% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 218 30% 11%;
 
-    --primary: 240 5.9% 10%;
+    --primary: 166 76% 28%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: 34 28% 91%;
+    --secondary-foreground: 218 30% 16%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 38 25% 92%;
+    --muted-foreground: 217 12% 43%;
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 178 35% 90%;
+    --accent-foreground: 180 55% 18%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --border: 36 19% 84%;
+    --input: 36 19% 84%;
+    --ring: 166 76% 28%;
 
     --radius: 0.5rem;
   }
@@ -71,11 +71,35 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    background:
+      radial-gradient(circle at top left, rgba(38, 116, 101, 0.12), transparent 34rem),
+      linear-gradient(180deg, hsl(var(--background)) 0%, #f3f0e8 100%);
+    min-height: 100vh;
   }
 }
 
 .cl-internal-rx251b{
   box-shadow: none;
-  width: '100%';
+  width: 100%;
+}
+
+.app-shell {
+  @apply mx-auto w-full max-w-[1800px] px-4 sm:px-6 lg:px-8;
+}
+
+.surface {
+  @apply border border-white/70 bg-white/85 shadow-[0_20px_70px_rgba(28,36,45,0.08)] backdrop-blur-xl;
+}
+
+.property-card {
+  @apply overflow-hidden rounded-lg border border-white/70 bg-white shadow-[0_18px_60px_rgba(18,28,38,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(18,28,38,0.14)];
+}
+
+.soft-pill {
+  @apply rounded-full border border-black/5 bg-white/80 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur;
+}
+
+.section-title {
+  @apply text-2xl font-bold tracking-tight text-slate-950 md:text-3xl;
 }

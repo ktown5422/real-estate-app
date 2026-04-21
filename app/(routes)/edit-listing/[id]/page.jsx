@@ -18,18 +18,7 @@ import { supabase } from '@/utils/supabase/client'
 import { toast } from 'sonner'
 import { useUser } from '@clerk/nextjs'
 import FileUpload from '../_components/FileUpload'
-import { Loader } from 'lucide-react'
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+import { Home, Loader, Save } from 'lucide-react'
 
 function EditListing({ params }) {
 
@@ -133,8 +122,17 @@ function EditListing({ params }) {
     }
 
     return (
-        <div className='px-10 md:px-36 my-10'>
-            <h2 className='font-bold text-2xl'>Enter some more details about your listing</h2>
+        <main className='app-shell max-w-6xl py-8'>
+            <div className='mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between'>
+                <div>
+                    <span className='mb-3 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/10 px-3 py-1 text-xs font-bold uppercase text-primary'>
+                        <Home className='h-3.5 w-3.5' />
+                        Listing studio
+                    </span>
+                    <h1 className='text-4xl font-bold tracking-tight text-slate-950'>Complete your listing</h1>
+                    <p className='mt-2 text-slate-600'>Add the details buyers and renters scan first.</p>
+                </div>
+            </div>
 
             <Formik
                 initialValues={{
@@ -154,11 +152,11 @@ function EditListing({ params }) {
                 }) => (
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <div className='p-5 border rounded-lg shadow-md grid gap-7 mt-6'>
+                            <div className='surface grid gap-8 rounded-lg p-5 md:p-8'>
                                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                                     <div className='flex gap-2 flex-col'>
 
-                                        <h2 className='text-gray-500'>Do you want to Rent it Sell it?</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Do you want to rent or sell it?</h2>
                                         <RadioGroup defaultValue={listing?.type}
                                             onValueChange={(v) => values.type = v}
                                         >
@@ -174,13 +172,13 @@ function EditListing({ params }) {
 
                                     </div>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>Property Type</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Property Type</h2>
                                         <Select
                                             onValueChange={(e) => values.propertyType = e}
                                             name="propertyType"
                                             defaultValue={listing?.propertyType}
                                         >
-                                            <SelectTrigger className="w-[180px]">
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder={listing?.propertyType ? listing?.propertyType : "Select Property Type"} />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -193,7 +191,7 @@ function EditListing({ params }) {
                                 </div>
                                 <div className='grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>Bedroom</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Bedroom</h2>
                                         <Input type="number" placeholder="Ex.2"
                                             defaultValue={listing?.bedroom}
                                             name="bedroom"
@@ -201,13 +199,13 @@ function EditListing({ params }) {
                                         />
                                     </div>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'   >Bathroom</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'   >Bathroom</h2>
                                         <Input type="number" placeholder="Ex.2" name="bathroom"
                                             onChange={handleChange}
                                             defaultValue={listing?.bathroom} />
                                     </div>
                                     <div className='flex gap-2 flex-col'   >
-                                        <h2 className='text-gray-500'>Built In</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Built In</h2>
                                         <Input type="number" placeholder="Ex.1900 Sq.ft"
                                             onChange={handleChange}
                                             defaultValue={listing?.builtIn} name="builtIn" />
@@ -216,20 +214,20 @@ function EditListing({ params }) {
                                 </div>
                                 <div className='grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>Parking</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Parking</h2>
                                         <Input type="number" placeholder="Ex.2" name="parking"
                                             onChange={handleChange}
                                             defaultValue={listing?.parking}
                                         />
                                     </div>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>Lot Size (Sq.Ft)</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Lot Size (Sq.Ft)</h2>
                                         <Input type="number" placeholder="" name="lotSize"
                                             onChange={handleChange}
                                             defaultValue={listing?.lotSize} />
                                     </div>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>Area (Sq.Ft)</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Area (Sq.Ft)</h2>
                                         <Input type="number" placeholder="Ex.1900" name="area"
                                             onChange={handleChange}
                                             defaultValue={listing?.area} />
@@ -238,13 +236,13 @@ function EditListing({ params }) {
                                 </div>
                                 <div className='grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>Selling Price ($)</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Selling Price ($)</h2>
                                         <Input type="number" placeholder="400000" name="price"
                                             onChange={handleChange}
                                             defaultValue={listing?.price} />
                                     </div>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>HOA (Per Month) ($)</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>HOA (Per Month) ($)</h2>
                                         <Input type="number"
                                             defaultValue={listing?.hoa} placeholder="100" onChange={handleChange}
                                             name="hoa" />
@@ -254,14 +252,14 @@ function EditListing({ params }) {
                                 </div>
                                 <div className='grid  grid-cols-1  gap-10'>
                                     <div className='flex gap-2 flex-col'>
-                                        <h2 className='text-gray-500'>Description</h2>
+                                        <h2 className='text-sm font-bold uppercase text-slate-500'>Description</h2>
                                         <Textarea placeholder="" name="description"
                                             onChange={handleChange}
                                             defaultValue={listing?.description} />
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 className='font-lg text-gray-500 my-2'>Upload Property Images</h2>
+                                    <h2 className='my-2 text-sm font-bold uppercase text-slate-500'>Upload Property Images</h2>
                                     <FileUpload
                                         setImages={(value) => setImages(value)}
                                         imageList={listing.listingImages}
@@ -269,8 +267,8 @@ function EditListing({ params }) {
                                 </div>
                                 <div className='flex gap-7 justify-end'>
 
-                                    <Button disabled={loading} variant="outline" className="text-primary border-primary">
-                                        {loading ? <Loader className='animate-spin' /> : 'Save'}
+                                    <Button disabled={loading} className="gap-2">
+                                        {loading ? <Loader className='animate-spin' /> : <><Save className='h-4 w-4' /> Save</>}
                                     </Button>
 
                                     {/* <AlertDialog>
@@ -301,7 +299,7 @@ function EditListing({ params }) {
                         </div>
                     </form>)}
             </Formik>
-        </div>
+        </main>
     )
 }
 

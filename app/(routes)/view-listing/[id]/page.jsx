@@ -37,20 +37,19 @@ function ViewListing({ params }) {
     }, [params.id]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className='app-shell py-10'><div className='h-[420px] animate-pulse rounded-lg bg-white/70 shadow-sm' /></div>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div className='app-shell py-10 text-red-600'>Error: {error}</div>;
     }
 
     return (
-        <div className='px-4 md:px-32 lg:px-56 py-5'>
+        <main className='app-shell max-w-6xl py-6'>
             <Slider imageList={listingDetail[0]?.listingImages} />
             <Details listingDetail={listingDetail[0]} />
-        </div>
+        </main>
     );
 }
 
 export default ViewListing;
-

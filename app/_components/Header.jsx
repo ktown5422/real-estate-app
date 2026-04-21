@@ -1,11 +1,11 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { SignOutButton, UserButton, useUser } from '@clerk/nextjs'
-import { Plus, Menu } from 'lucide-react'
+import { SignOutButton, useUser } from '@clerk/nextjs'
+import { Building2, ChevronDown, Home, LogIn, Menu, Plus, Search, UserRound } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,43 +20,60 @@ function Header() {
   const { user, isSignedIn } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const navItems = [
+    { label: 'Buy', href: '/', active: path == '/', icon: Home },
+    { label: 'Rent', href: '/rent', active: path == '/rent', icon: Search },
+    { label: 'Agents', href: '#', active: false, icon: UserRound },
+  ];
+
   return (
-    <div className='p-6 px-4 md:px-10 flex justify-between shadow-sm fixed top-0 w-full z-10 bg-white'>
-      <div className='flex gap-4 md:gap-12 items-center'>
-        <Link className='font-bold text-xl' href={'/'}>
-          Real Estate App
+    <header className='fixed left-0 top-0 z-30 w-full border-b border-white/70 bg-white/80 backdrop-blur-xl'>
+      <div className='app-shell flex h-20 items-center justify-between'>
+      <div className='flex gap-4 md:gap-10 items-center'>
+        <Link className='group flex items-center gap-3' href={'/'}>
+          <span className='flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-white shadow-[0_14px_32px_rgba(31,112,96,0.24)]'>
+            <Building2 className='h-5 w-5' />
+          </span>
+          <span className='leading-tight'>
+            <span className='block text-lg font-bold tracking-tight text-slate-950'>NestFind</span>
+            <span className='hidden text-xs font-semibold uppercase text-slate-500 sm:block'>Modern homes</span>
+          </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <ul className='hidden md:flex gap-6 lg:gap-10'>
-          <Link href={'/'} >
-            <li className={`hover:text-primary font-medium text-sm cursor-pointer ${path == '/' && 'text-primary'}`}>For Sell</li>
-          </Link>
-          <Link href={'/rent'} >
-            <li className={`hover:text-primary font-medium text-sm cursor-pointer ${path == '/rent' && 'text-primary'}`}>For Rent</li>
-          </Link>
-          <li className='hover:text-primary font-medium text-sm cursor-pointer'>Agent Finder</li>
+        <ul className='hidden rounded-full border border-slate-200/80 bg-white/70 p-1 shadow-sm md:flex'>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link href={item.href} key={item.label}>
+                <li className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${item.active ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'}`}>
+                  <Icon className='h-4 w-4' />
+                  {item.label}
+                </li>
+              </Link>
+            )
+          })}
         </ul>
 
-        {/* Mobile Menu Button */}
         <div className='flex md:hidden'>
-          <Button variant="ghost" onClick={() => setMenuOpen(!menuOpen)}>
+          <Button variant="ghost" size="icon" onClick={() => setMenuOpen(!menuOpen)} aria-label="Open navigation">
             <Menu className='h-6 w-6' />
           </Button>
         </div>
       </div>
 
-      {/* User and Post Ad Section */}
       <div className='flex gap-2 items-center'>
         <Link href={'/add-new-listing'}>
-          <Button className="hidden md:flex gap-2"><Plus className='h-5 w-5' /> Post Your Ad</Button>
+          <Button className="hidden gap-2 md:flex"><Plus className='h-5 w-5' /> List a Home</Button>
         </Link>
         {isSignedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Image src={user?.imageUrl} width={35} height={35} alt='user profile' className='rounded-full' />
+              <button className='flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 p-1.5 pr-3 shadow-sm transition hover:bg-white'>
+                <Image src={user?.imageUrl} width={34} height={34} alt='user profile' className='rounded-full' />
+                <ChevronDown className='h-4 w-4 text-slate-500' />
+              </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="mt-2 w-52 rounded-lg">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
@@ -74,30 +91,31 @@ function Header() {
           </DropdownMenu>
         ) : (
           <Link href={'/sign-in'}>
-            <Button variant="outline">Login</Button>
+            <Button variant="outline" className="gap-2"><LogIn className='h-4 w-4' /> Login</Button>
           </Link>
         )}
       </div>
 
-      {/* Mobile Navigation Menu */}
       {menuOpen && (
-        <div className='absolute top-full left-0 w-full bg-white shadow-md flex flex-col md:hidden z-10'>
-          <Link href={'/'} >
-            <Button variant="ghost" className={`w-full text-left py-2 ${path == '/' ? 'text-primary' : ''}`}>
-              For Sell
-            </Button>
+        <div className='absolute left-4 right-4 top-[88px] z-10 flex flex-col rounded-lg border border-slate-200 bg-white p-2 shadow-xl md:hidden'>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link href={item.href} key={item.label}>
+                <Button variant="ghost" className={`w-full justify-start gap-2 ${item.active ? 'bg-accent text-primary' : ''}`}>
+                  <Icon className='h-4 w-4' />
+                  {item.label}
+                </Button>
+              </Link>
+            )
+          })}
+          <Link href={'/add-new-listing'} className='mt-2'>
+            <Button className="w-full gap-2"><Plus className='h-4 w-4' /> List a Home</Button>
           </Link>
-          <Link href={'/rent'} >
-            <Button variant="ghost" className={`w-full text-left py-2 ${path == '/rent' ? 'text-primary' : ''}`}>
-              For Rent
-            </Button>
-          </Link>
-          <Button variant="ghost" className='w-full text-left py-2'>
-            Agent Finder
-          </Button>
         </div>
       )}
-    </div>
+      </div>
+    </header>
   )
 }
 

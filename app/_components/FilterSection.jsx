@@ -10,9 +10,8 @@ import { Bath, BedDouble, CarFront } from 'lucide-react';
 
 function FilterSection({ setBathCount, setBedCount, setParkingCount, setHomeType }) {
     return (
-        <div className='px-3 py-2 flex flex-wrap gap-4'>
-            {/* Bed Count Selector */}
-            <div className='flex-1 min-w-[120px] sm:min-w-[140px] md:min-w-[160px]'>
+        <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4'>
+            <div>
                 <Select onValueChange={setBedCount}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Bed" />
@@ -42,8 +41,7 @@ function FilterSection({ setBathCount, setBedCount, setParkingCount, setHomeType
                 </Select>
             </div>
 
-            {/* Bath Count Selector */}
-            <div className='flex-1 min-w-[120px] sm:min-w-[140px] md:min-w-[160px]'>
+            <div>
                 <Select onValueChange={setBathCount}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Bath" />
@@ -73,8 +71,7 @@ function FilterSection({ setBathCount, setBedCount, setParkingCount, setHomeType
                 </Select>
             </div>
 
-            {/* Parking Count Selector */}
-            <div className='flex-1 min-w-[120px] sm:min-w-[140px] md:min-w-[160px]'>
+            <div>
                 <Select onValueChange={setParkingCount}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Parking" />
@@ -99,8 +96,7 @@ function FilterSection({ setBathCount, setBedCount, setParkingCount, setHomeType
                 </Select>
             </div>
 
-            {/* Home Type Selector */}
-            <div className='flex-1 min-w-[120px] sm:min-w-[140px] md:min-w-[160px]'>
+            <div>
                 <Select onValueChange={(value) => value === 'All' ? setHomeType(null) : setHomeType(value)}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Home Type" />

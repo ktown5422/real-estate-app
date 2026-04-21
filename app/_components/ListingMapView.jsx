@@ -4,7 +4,6 @@ import Listing from './Listing';
 import { supabase } from '@/utils/supabase/client';
 import { toast } from 'sonner';
 import GoogleMapSection from './GoogleMapSection';
-import dummyData from '@/utils/dummyData';
 
 function ListingMapView({ type }) {
     const [listing, setListing] = useState([]);
@@ -66,10 +65,10 @@ function ListingMapView({ type }) {
     }
 
     return (
-        <div className='flex flex-col md:flex-row gap-8'>
-            {/* Listing section */}
-            <div className='flex-1'>
+        <div className='grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(420px,0.82fr)]'>
+            <div className='min-w-0'>
                 <Listing
+                    type={type}
                     listing={listing}
                     handleSearchClick={handleSearchClick}
                     searchedAddress={(v) => setSearchedAddress(v)}
@@ -81,15 +80,14 @@ function ListingMapView({ type }) {
                 />
             </div>
 
-            {/* Google Map Section */}
-            <div className='flex-1 relative md:static h-[300px] md:h-auto'>
-                <div className='w-full h-full md:w-[350px] lg:w-[450px] xl:w-[650px]'>
+            <aside className='relative h-[360px] xl:sticky xl:top-28 xl:h-[calc(100vh-8rem)]'>
+                <div className='surface h-full overflow-hidden rounded-lg p-2'>
                     <GoogleMapSection
                         listing={listing}
                         coordinates={coordinates}
                     />
                 </div>
-            </div>
+            </aside>
         </div>
     );
 }

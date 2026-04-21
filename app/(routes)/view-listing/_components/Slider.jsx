@@ -6,11 +6,11 @@ function Slider({ imageList }) {
   return (
     <div>
       {imageList ? (
-        <Carousel>
+        <Carousel className="overflow-hidden rounded-lg shadow-[0_24px_80px_rgba(18,28,38,0.16)]">
           <CarouselContent>
             {imageList.map((item, index) => (
               <CarouselItem key={index}>
-                <Image src={item.url} width={800} height={300} alt='image' className='rounded-xl object-cover h-[360px] w-full' />
+                <Image src={item.url} width={1200} height={560} alt='image' className='h-[320px] w-full object-cover md:h-[560px]' />
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -18,7 +18,7 @@ function Slider({ imageList }) {
           <CarouselNext />
         </Carousel>
       ) : (
-        <div className='w-full h-[200px] bg-slate-200 animate-pulse rounded-lg'><text>loading</text></div>
+        <div className='h-[320px] w-full animate-pulse rounded-lg bg-white/70 md:h-[560px]'></div>
       )}
     </div>
   );
