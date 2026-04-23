@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Award, Building2, Mail, MapPin, Phone, ShieldCheck, Star, UserRound } from 'lucide-react';
 import React from 'react';
+import SectionHeader from '@/app/_components/SectionHeader';
+import StatCard from '@/app/_components/StatCard';
 
 const agents = [
   {
@@ -58,7 +60,7 @@ function AgentsPage() {
     <main className='app-shell py-6 md:py-8'>
       <section className='grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.7fr)] lg:items-start'>
         <div className='space-y-5'>
-          <div className='inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/10 px-3 py-1 text-xs font-bold uppercase text-primary'>
+          <div className='eyebrow'>
             <UserRound className='h-3.5 w-3.5' />
             Houston agents
           </div>
@@ -69,22 +71,13 @@ function AgentsPage() {
             </p>
           </div>
           <div className='grid gap-3 sm:grid-cols-3'>
-            <div className='rounded-lg border border-slate-200 bg-white/80 p-4 shadow-sm'>
-              <p className='text-3xl font-bold text-slate-950'>4</p>
-              <p className='mt-1 text-xs font-semibold uppercase text-slate-500'>Featured agents</p>
-            </div>
-            <div className='rounded-lg border border-slate-200 bg-white/80 p-4 shadow-sm'>
-              <p className='text-3xl font-bold text-slate-950'>186</p>
-              <p className='mt-1 text-xs font-semibold uppercase text-slate-500'>Closed sides</p>
-            </div>
-            <div className='rounded-lg border border-slate-200 bg-white/80 p-4 shadow-sm'>
-              <p className='text-3xl font-bold text-slate-950'>4.8+</p>
-              <p className='mt-1 text-xs font-semibold uppercase text-slate-500'>Average rating</p>
-            </div>
+            <StatCard value='4' label='Featured agents' />
+            <StatCard value='186' label='Closed sides' />
+            <StatCard value='4.8+' label='Average rating' />
           </div>
         </div>
 
-        <div className='surface rounded-lg p-5 md:p-6'>
+        <div className='panel panel-pad'>
           <div className='flex items-start gap-4'>
             <div className='flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary'>
               <ShieldCheck className='h-6 w-6' />
@@ -117,10 +110,10 @@ function AgentsPage() {
 
       <section className='mt-10'>
         <div className='mb-5 flex items-end justify-between gap-4'>
-          <div>
-            <h2 className='section-title'>Featured Agents</h2>
-            <p className='mt-2 text-sm text-slate-600'>People Houston buyers and renters can actually scan and compare in a minute.</p>
-          </div>
+          <SectionHeader
+            title='Featured Agents'
+            description='People Houston buyers and renters can actually scan and compare in a minute.'
+          />
         </div>
 
         <div className='grid gap-4 md:grid-cols-2 xl:grid-cols-4'>

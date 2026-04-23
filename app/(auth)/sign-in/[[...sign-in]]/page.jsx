@@ -21,7 +21,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="surface mx-auto w-full max-w-md rounded-lg p-5 md:p-8">
+      <section className="panel panel-pad mx-auto w-full max-w-md">
         <div className="mb-6">
           <p className="text-xs font-bold uppercase text-primary">Welcome back</p>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">Sign in to NestFind</h2>

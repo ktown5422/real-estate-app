@@ -88,8 +88,24 @@
   @apply mx-auto w-full max-w-[1800px] px-4 sm:px-6 lg:px-8;
 }
 
+.page-shell {
+  @apply app-shell;
+}
+
 .surface {
   @apply border border-white/70 bg-white/85 shadow-[0_20px_70px_rgba(28,36,45,0.08)] backdrop-blur-xl;
+}
+
+.panel {
+  @apply surface rounded-lg;
+}
+
+.panel-pad {
+  @apply p-5 md:p-6;
+}
+
+.panel-pad-sm {
+  @apply p-4 md:p-5;
 }
 
 .property-card {
@@ -100,6 +116,34 @@
   @apply rounded-full border border-black/5 bg-white/80 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur;
 }
 
+.eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/10 px-3 py-1 text-xs font-bold uppercase text-primary;
+}
+
 .section-title {
   @apply text-2xl font-bold tracking-tight text-slate-950 md:text-3xl;
+}
+
+.section-copy {
+  @apply text-sm leading-6 text-slate-600 md:text-base;
+}
+
+.stat-card {
+  @apply rounded-lg border border-slate-200 bg-white/80 p-4 shadow-sm;
+}
+
+.stat-value {
+  @apply text-3xl font-bold text-slate-950;
+}
+
+.stat-label {
+  @apply mt-1 text-xs font-semibold uppercase text-slate-500;
+}
+
+.empty-state {
+  @apply surface col-span-full rounded-lg p-8 text-center md:p-12;
+}
+
+.icon-badge {
+  @apply mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary;
 }

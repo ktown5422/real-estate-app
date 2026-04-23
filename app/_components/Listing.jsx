@@ -5,6 +5,9 @@ import GoogleAddressSearch from './GoogleAddressSearch';
 import { Button } from '@/components/ui/button';
 import FilterSection from './FilterSection';
 import Link from 'next/link';
+import SectionHeader from './SectionHeader';
+import StatCard from './StatCard';
+import EmptyState from './EmptyState';
 
 function Listing({
     type,
@@ -72,7 +75,7 @@ function Listing({
             <section className='surface rounded-lg p-4 sm:p-5'>
                 <div className='mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between'>
                     <div>
-                        <div className='mb-3 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/10 px-3 py-1 text-xs font-bold uppercase text-primary'>
+                        <div className='eyebrow mb-3'>
                             <Sparkles className='h-3.5 w-3.5' />
                             Houston {type === 'Rent' ? 'leases' : 'listings'}
                         </div>
@@ -83,19 +86,10 @@ function Listing({
                             Search Houston-area homes, compare essentials quickly, and keep the map in view while you browse neighborhoods from the Inner Loop to Sugar Land.
                         </p>
                     </div>
-                    <div className='grid grid-cols-3 gap-2 rounded-lg border border-slate-200 bg-white/80 p-2 text-center shadow-sm sm:min-w-[320px]'>
-                        <div className='px-2 py-3'>
-                            <p className='text-2xl font-bold text-slate-950'>{listing?.length || 0}</p>
-                            <p className='text-xs font-semibold uppercase text-slate-500'>Active</p>
-                        </div>
-                        <div className='border-x border-slate-200 px-2 py-3'>
-                            <p className='text-2xl font-bold text-slate-950'>Live</p>
-                            <p className='text-xs font-semibold uppercase text-slate-500'>Map</p>
-                        </div>
-                        <div className='px-2 py-3'>
-                            <p className='text-2xl font-bold text-slate-950'>2026</p>
-                            <p className='text-xs font-semibold uppercase text-slate-500'>Style</p>
-                        </div>
+                    <div className='grid w-full grid-cols-3 gap-2 rounded-lg border border-slate-200 bg-white/80 p-2 text-center shadow-sm sm:min-w-[320px] lg:max-w-[360px]'>
+                        <StatCard value={listing?.length || 0} label='Active' className='min-h-[88px] border-0 bg-transparent p-0 shadow-none px-2 py-3' valueClassName='text-xl sm:text-2xl' labelClassName='mt-0' />
+                        <StatCard value='Live' label='Map' className='min-h-[88px] border-x border-slate-200 rounded-none bg-transparent p-0 shadow-none px-2 py-3' valueClassName='text-xl sm:text-2xl' labelClassName='mt-0' />
+                        <StatCard value='Houston' label='Market' className='min-h-[88px] border-0 bg-transparent p-0 shadow-none px-2 py-3' valueClassName='text-lg sm:text-2xl' labelClassName='mt-0' />
                     </div>
                 </div>
 
@@ -132,10 +126,10 @@ function Listing({
             </div>
 
             <div className='flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between'>
-                <div>
-                    <h2 className='section-title'>{address ? `${listing?.length || 0} results near ${address?.label}` : `Featured Houston ${resultLabel}`}</h2>
-                    <p className='text-sm text-slate-600'>Fresh Houston inventory with the essentials visible at a glance.</p>
-                </div>
+                <SectionHeader
+                    title={address ? `${listing?.length || 0} results near ${address?.label}` : `Featured Houston ${resultLabel}`}
+                    description='Fresh Houston inventory with the essentials visible at a glance.'
+                />
                 <span className='soft-pill w-fit'>{type === 'Rent' ? 'Monthly pricing' : 'Purchase listings'}</span>
             </div>
 
@@ -154,15 +148,10 @@ function Listing({
                         </Link>
                     )
                 )) : (
-                    <div className='surface col-span-full rounded-lg p-8 text-center md:p-12'>
-                        <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary'>
-                            <Search className='h-5 w-5' />
-                        </div>
-                        <h3 className='text-2xl font-bold tracking-tight text-slate-950'>No listings match these filters</h3>
-                        <p className='mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 md:text-base'>
-                            Try widening the bedroom, bathroom, parking, or home type filters, or search a broader Houston-area neighborhood.
-                        </p>
-                    </div>
+                    <EmptyState
+                        title='No listings match these filters'
+                        description='Try widening the bedroom, bathroom, parking, or home type filters, or search a broader Houston-area neighborhood.'
+                    />
                 )}
             </div>
         </div>
