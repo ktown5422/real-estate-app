@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 function Listing({
     type,
+    loading,
     listing,
     handleSearchClick,
     searchedAddress,
@@ -20,6 +21,7 @@ function Listing({
     const [address, setAddress] = useState();
     const resultLabel = type === 'Rent' ? 'rentals' : 'homes for sale';
     const formatPrice = (price) => price ? Number(price).toLocaleString('en-US') : 'Price on request';
+    const visibleListings = (listing || []).filter((item) => item?.listingImages?.[0]?.url);
 
     return (
         <div className='space-y-5'>
@@ -94,7 +96,10 @@ function Listing({
             </div>
 
             <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3'>
-                {listing?.length > 0 ? listing.map((item) => item?.listingImages[0]?.url && (
+                {loading ? [1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+                    <div key={index} className='h-[330px] w-full animate-pulse rounded-lg bg-white/70 shadow-sm'>
+                    </div>
+                )) : visibleListings.length > 0 ? visibleListings.map((item) => (
                     <Link href={'/view-listing/' + item.id} key={item.id}>
                         <article className='property-card cursor-pointer'>
                             <div className='relative'>
@@ -138,11 +143,17 @@ function Listing({
                             </div>
                         </article>
                     </Link>
-                ))
-                    : [1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
-                        <div key={index} className='h-[330px] w-full animate-pulse rounded-lg bg-white/70 shadow-sm'>
+                )) : (
+                    <div className='surface col-span-full rounded-lg p-8 text-center md:p-12'>
+                        <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary'>
+                            <Search className='h-5 w-5' />
                         </div>
-                    ))}
+                        <h3 className='text-2xl font-bold tracking-tight text-slate-950'>No listings match these filters</h3>
+                        <p className='mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 md:text-base'>
+                            Try widening the bedroom, bathroom, parking, or home type filters, or search a broader area.
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );

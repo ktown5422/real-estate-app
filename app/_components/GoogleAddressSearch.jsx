@@ -3,7 +3,26 @@ import { MapPin } from 'lucide-react';
 import React from 'react'
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete'
 
-function GoogleAddressSearch({ selectedAddress, setCoordinates }) {
+function GoogleAddressSearch({ selectedAddress, setCoordinates, value, onChange, placeholder = 'Search neighborhood, city, or address' }) {
+  const handleChange = async (place) => {
+    onChange?.(place);
+    selectedAddress?.(place);
+
+    if (!place) {
+      setCoordinates?.(null);
+      return;
+    }
+
+    try {
+      const results = await geocodeByAddress(place.label);
+      const { lat, lng } = await getLatLng(results[0]);
+      setCoordinates?.({ lat, lng });
+    } catch (error) {
+      console.error('Error getting coordinates:', error);
+      setCoordinates?.(null);
+    }
+  }
+
   return (
     <div className='flex w-full items-center rounded-lg border border-slate-200 bg-white/85 p-1 shadow-sm transition focus-within:ring-2 focus-within:ring-primary'>
       <div className='flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary'>
@@ -12,7 +31,8 @@ function GoogleAddressSearch({ selectedAddress, setCoordinates }) {
       <GooglePlacesAutocomplete
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACE_API_KEY}
         selectProps={{
-          placeholder: 'Search neighborhood, city, or address',
+          value,
+          placeholder,
           isClearable: true,
           className: 'w-full',
           styles: {
@@ -40,18 +60,7 @@ function GoogleAddressSearch({ selectedAddress, setCoordinates }) {
               zIndex: 50,
             }),
           },
-          onChange: (place) => {
-            if (place) {
-              selectedAddress(place);
-              geocodeByAddress(place.label)
-                .then(result => getLatLng(result[0]))
-                .then(({ lat, lng }) => {
-                  setCoordinates({ lat, lng })
-                })
-            } else {
-              selectedAddress(null);
-            }
-          }
+          onChange: handleChange
         }}
       />
     </div>
