@@ -1,5 +1,4 @@
-import Image from "next/image";
-import ListingMapView from "./_components/ListingMapView";
+import ListingMapView from "@/app/_components/ListingMapView";
 
 export default function Home() {
   return (
