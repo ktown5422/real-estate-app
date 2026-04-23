@@ -22,6 +22,50 @@ function Listing({
     const resultLabel = type === 'Rent' ? 'rentals' : 'homes for sale';
     const formatPrice = (price) => price ? Number(price).toLocaleString('en-US') : 'Price on request';
     const visibleListings = (listing || []).filter((item) => item?.listingImages?.[0]?.url);
+    const renderListingCard = (item) => (
+        <article className='property-card cursor-pointer'>
+            <div className='relative'>
+                <Image
+                    src={item?.listingImages[0]?.url}
+                    width={800}
+                    height={240}
+                    className='h-[220px] w-full object-cover'
+                    alt={`Listing Image ${item.id}`}
+                />
+                <div className='absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/55 to-transparent' />
+                <div className='absolute left-3 top-3 flex gap-2'>
+                    <span className='soft-pill'>{item?.propertyType || 'Home'}</span>
+                    {item?.isDummy && <span className='soft-pill'>Demo</span>}
+                </div>
+                <button className='absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:text-primary' aria-label="Save listing">
+                    <Heart className='h-4 w-4' />
+                </button>
+                <div className='absolute bottom-3 left-3 text-white'>
+                    <h3 className='text-2xl font-bold tracking-tight'>${formatPrice(item?.price)}</h3>
+                </div>
+            </div>
+            <div className='flex flex-col gap-4 p-4'>
+                <p className='flex min-h-[40px] gap-2 text-sm leading-5 text-slate-600'>
+                    <MapPin className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
+                    <span className='line-clamp-2'>{item.address}</span>
+                </p>
+                <div className='grid grid-cols-3 gap-2'>
+                    <div className='flex items-center justify-center gap-2 rounded-lg bg-slate-100 p-2 text-sm font-semibold text-slate-700'>
+                        <BedDouble className='h-4 w-4' />
+                        {item?.bedroom}
+                    </div>
+                    <div className='flex items-center justify-center gap-2 rounded-lg bg-slate-100 p-2 text-sm font-semibold text-slate-700'>
+                        <Bath className='h-4 w-4' />
+                        {item?.bathroom}
+                    </div>
+                    <div className='flex items-center justify-center gap-2 rounded-lg bg-slate-100 p-2 text-sm font-semibold text-slate-700'>
+                        <Ruler className='h-4 w-4' />
+                        {item?.area}
+                    </div>
+                </div>
+            </div>
+        </article>
+    );
 
     return (
         <div className='space-y-5'>
@@ -30,13 +74,13 @@ function Listing({
                     <div>
                         <div className='mb-3 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/10 px-3 py-1 text-xs font-bold uppercase text-primary'>
                             <Sparkles className='h-3.5 w-3.5' />
-                            Curated {type === 'Rent' ? 'leases' : 'listings'}
+                            Houston {type === 'Rent' ? 'leases' : 'listings'}
                         </div>
                         <h1 className='text-3xl font-bold tracking-tight text-slate-950 md:text-5xl'>
-                            Find your next place with sharper context.
+                            Find your next Houston home with sharper local context.
                         </h1>
                         <p className='mt-3 max-w-2xl text-sm leading-6 text-slate-600 md:text-base'>
-                            Search homes, compare essentials quickly, and keep the map in view while you browse.
+                            Search Houston-area homes, compare essentials quickly, and keep the map in view while you browse neighborhoods from the Inner Loop to Sugar Land.
                         </p>
                     </div>
                     <div className='grid grid-cols-3 gap-2 rounded-lg border border-slate-200 bg-white/80 p-2 text-center shadow-sm sm:min-w-[320px]'>
@@ -89,8 +133,8 @@ function Listing({
 
             <div className='flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between'>
                 <div>
-                    <h2 className='section-title'>{address ? `${listing?.length || 0} results near ${address?.label}` : `Featured ${resultLabel}`}</h2>
-                    <p className='text-sm text-slate-600'>Fresh inventory with the essentials visible at a glance.</p>
+                    <h2 className='section-title'>{address ? `${listing?.length || 0} results near ${address?.label}` : `Featured Houston ${resultLabel}`}</h2>
+                    <p className='text-sm text-slate-600'>Fresh Houston inventory with the essentials visible at a glance.</p>
                 </div>
                 <span className='soft-pill w-fit'>{type === 'Rent' ? 'Monthly pricing' : 'Purchase listings'}</span>
             </div>
@@ -100,49 +144,15 @@ function Listing({
                     <div key={index} className='h-[330px] w-full animate-pulse rounded-lg bg-white/70 shadow-sm'>
                     </div>
                 )) : visibleListings.length > 0 ? visibleListings.map((item) => (
-                    <Link href={'/view-listing/' + item.id} key={item.id}>
-                        <article className='property-card cursor-pointer'>
-                            <div className='relative'>
-                                <Image
-                                    src={item?.listingImages[0]?.url}
-                                    width={800}
-                                    height={240}
-                                    className='h-[220px] w-full object-cover'
-                                    alt={`Listing Image ${item.id}`}
-                                />
-                                <div className='absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/55 to-transparent' />
-                                <div className='absolute left-3 top-3 flex gap-2'>
-                                    <span className='soft-pill'>{item?.propertyType || 'Home'}</span>
-                                </div>
-                                <button className='absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:text-primary' aria-label="Save listing">
-                                    <Heart className='h-4 w-4' />
-                                </button>
-                                <div className='absolute bottom-3 left-3 text-white'>
-                                    <h3 className='text-2xl font-bold tracking-tight'>${formatPrice(item?.price)}</h3>
-                                </div>
-                            </div>
-                            <div className='flex flex-col gap-4 p-4'>
-                                <p className='flex min-h-[40px] gap-2 text-sm leading-5 text-slate-600'>
-                                    <MapPin className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
-                                    <span className='line-clamp-2'>{item.address}</span>
-                                </p>
-                                <div className='grid grid-cols-3 gap-2'>
-                                    <div className='flex items-center justify-center gap-2 rounded-lg bg-slate-100 p-2 text-sm font-semibold text-slate-700'>
-                                        <BedDouble className='h-4 w-4' />
-                                        {item?.bedroom}
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2 rounded-lg bg-slate-100 p-2 text-sm font-semibold text-slate-700'>
-                                        <Bath className='h-4 w-4' />
-                                        {item?.bathroom}
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2 rounded-lg bg-slate-100 p-2 text-sm font-semibold text-slate-700'>
-                                        <Ruler className='h-4 w-4' />
-                                        {item?.area}
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </Link>
+                    item?.isDummy ? (
+                        <div key={item.id}>
+                            {renderListingCard(item)}
+                        </div>
+                    ) : (
+                        <Link href={'/view-listing/' + item.id} key={item.id}>
+                            {renderListingCard(item)}
+                        </Link>
+                    )
                 )) : (
                     <div className='surface col-span-full rounded-lg p-8 text-center md:p-12'>
                         <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary'>
@@ -150,7 +160,7 @@ function Listing({
                         </div>
                         <h3 className='text-2xl font-bold tracking-tight text-slate-950'>No listings match these filters</h3>
                         <p className='mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 md:text-base'>
-                            Try widening the bedroom, bathroom, parking, or home type filters, or search a broader area.
+                            Try widening the bedroom, bathroom, parking, or home type filters, or search a broader Houston-area neighborhood.
                         </p>
                     </div>
                 )}

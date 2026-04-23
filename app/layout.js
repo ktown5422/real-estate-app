@@ -7,8 +7,8 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "NestFind",
-  description: "A modern real estate marketplace for buying and renting homes.",
+  title: "NestFind - Houston Real Estate Marketplace",
+  description: "A Houston, Texas real estate marketplace for buying, renting, and connecting with local agents.",
 };
 
 export default function RootLayout({ children }) {

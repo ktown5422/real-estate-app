@@ -3,7 +3,7 @@ import { MapPin } from 'lucide-react';
 import React from 'react'
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete'
 
-function GoogleAddressSearch({ selectedAddress, setCoordinates, value, onChange, placeholder = 'Search neighborhood, city, or address' }) {
+function GoogleAddressSearch({ selectedAddress, setCoordinates, value, onChange, placeholder = 'Search Houston neighborhoods, suburbs, or address' }) {
   const handleChange = async (place) => {
     onChange?.(place);
     selectedAddress?.(place);

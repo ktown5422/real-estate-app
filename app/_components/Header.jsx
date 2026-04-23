@@ -23,7 +23,7 @@ function Header() {
   const navItems = [
     { label: 'Buy', href: '/', active: path == '/', icon: Home },
     { label: 'Rent', href: '/rent', active: path == '/rent', icon: Search },
-    { label: 'Agents', href: '#', active: false, icon: UserRound },
+    { label: 'Agents', href: '/agents', active: path == '/agents', icon: UserRound },
   ];
 
   return (

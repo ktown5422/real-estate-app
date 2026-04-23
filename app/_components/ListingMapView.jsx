@@ -4,11 +4,14 @@ import Listing from './Listing';
 import { supabase } from '@/utils/supabase/client';
 import { toast } from 'sonner';
 import GoogleMapSection from './GoogleMapSection';
+import dummyData from '@/utils/dummyData';
 
 const parseCount = (value) => {
     const parsedValue = Number.parseInt(value, 10);
     return Number.isFinite(parsedValue) ? parsedValue : 0;
 };
+
+const sortListingsByIdDesc = (a, b) => String(b.id).localeCompare(String(a.id));
 
 function ListingMapView({ type }) {
     const [listing, setListing] = useState([]);
@@ -33,10 +36,13 @@ function ListingMapView({ type }) {
     const fetchListings = useCallback(async () => {
         setLoading(true);
         const searchTerm = searchedAddress?.label?.trim();
+        const minimumBedroomCount = parseCount(bedCount);
+        const minimumBathroomCount = parseCount(bathCount);
+        const minimumParkingCount = parseCount(parkingCount);
         let query = createListingQuery()
-            .gte('bedroom', parseCount(bedCount))
-            .gte('bathroom', parseCount(bathCount))
-            .gte('parking', parseCount(parkingCount));
+            .gte('bedroom', minimumBedroomCount)
+            .gte('bathroom', minimumBathroomCount)
+            .gte('parking', minimumParkingCount);
 
         if (searchTerm) {
             query = query.ilike('address', `%${searchTerm}%`);
@@ -54,9 +60,15 @@ function ListingMapView({ type }) {
             return;
         }
 
-        if (data) {
-            setListing(data);
-        }
+        const filteredDummyListings = dummyData
+            .filter((item) => item.active && item.type === type)
+            .filter((item) => item.bedroom >= minimumBedroomCount)
+            .filter((item) => item.bathroom >= minimumBathroomCount)
+            .filter((item) => item.parking >= minimumParkingCount)
+            .filter((item) => !homeType || item.propertyType === homeType)
+            .filter((item) => !searchTerm || item.address?.toLowerCase().includes(searchTerm.toLowerCase()));
+
+        setListing([...(data || []), ...filteredDummyListings].sort(sortListingsByIdDesc));
         setLoading(false);
     }, [bathCount, bedCount, createListingQuery, homeType, parkingCount, searchedAddress]);
 
